@@ -1,79 +1,88 @@
 'use client';
 
 import { useAuth } from '@/context/auth';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { FilePlus2, FolderKanban, Users } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { FileText, FolderKanban, Users, Wrench } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 export default function DashboardPage() {
-  const { currentUser, role } = useAuth();
+  const { role } = useAuth();
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold tracking-tight">
-        Welcome back, {currentUser?.displayName || currentUser?.email?.split('@')[0] || 'User'}!
-      </h1>
-      <p className="text-muted-foreground mt-2">
-        Here's a quick overview of your legal workspace.
-      </p>
+    <div className="flex flex-col gap-8">
+      <section className="text-center bg-card border rounded-lg p-8 shadow-sm">
+        <h1 className="text-4xl font-bold font-headline text-primary tracking-tight">
+          Welcome to LawAI
+        </h1>
+        <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+          Your intelligent legal assistant designed for the Indian legal landscape. Streamline your workflow with powerful AI tools for document analysis, creation, and research.
+        </p>
+        <Button asChild size="lg" className="mt-6">
+          <Link href="/app/tools">
+            <Wrench className="mr-2 h-5 w-5" />
+            Explore Legal Tools
+          </Link>
+        </Button>
+      </section>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-8">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Generated Documents
-            </CardTitle>
-            <FolderKanban className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">12</div>
-            <p className="text-xs text-muted-foreground">
-              +2 this month
-            </p>
-             <Button asChild variant="link" className="px-0">
-                <Link href="/app/documents">View Saved Documents</Link>
-            </Button>
-          </CardContent>
-        </Card>
-        
-        {role === 'professional' && (
+      <section>
+        <h2 className="text-2xl font-semibold tracking-tight mb-4">Your Workspace</h2>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Clients Managed
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="w-6 h-6 text-accent" />
+                Legal Tools
               </CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
+              <CardDescription>
+                Access AI-powered document summarization, creation, and legal search.
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">5</div>
-              <p className="text-xs text-muted-foreground">
-                +1 new client this week
-              </p>
-              <Button asChild variant="link" className="px-0">
-                  <Link href="/app/clients">Manage Clients</Link>
+              <Button asChild variant="outline" className="w-full">
+                <Link href="/app/tools">Go to Tools</Link>
               </Button>
             </CardContent>
           </Card>
-        )}
 
-        <Card className="md:col-span-2 lg:col-span-1">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Quick Actions
-            </CardTitle>
-             <FilePlus2 className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground mb-4">
-              Jump right into your legal tasks.
-            </p>
-            <Button asChild className="w-full">
-                <Link href="/app/tools">Go to Legal Tools</Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FolderKanban className="w-6 h-6 text-accent" />
+                Saved Documents
+              </CardTitle>
+              <CardDescription>
+                Review, manage, and download all your previously generated documents.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+               <Button asChild variant="outline" className="w-full">
+                  <Link href="/app/documents">View Documents</Link>
+              </Button>
+            </CardContent>
+          </Card>
+          
+          {role === 'professional' && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    <Users className="w-6 h-6 text-accent" />
+                    Client Management
+                </CardTitle>
+                <CardDescription>
+                  Organize client information and link them to cases and documents.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button asChild variant="outline" className="w-full">
+                    <Link href="/app/clients">Manage Clients</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </section>
     </div>
   );
 }
