@@ -4,6 +4,7 @@ import { SidebarProvider, Sidebar, SidebarInset, SidebarTrigger, SidebarContent,
 import { SidebarNav } from "@/components/layout/sidebar-nav";
 import { Scale } from "lucide-react";
 import { useAuth } from "@/context/auth";
+import Link from "next/link";
 
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -32,12 +33,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <header className="p-4 border-b flex items-center justify-between sticky top-0 bg-background/80 backdrop-blur-sm z-10">
               <div className="flex items-center gap-4">
                 <SidebarTrigger />
-                <div className="flex items-center gap-2">
+                <Link href="/app" className="flex items-center gap-2">
                     <Scale className="w-6 h-6 text-primary" />
                     <h1 className="text-xl font-headline font-bold text-primary hidden md:block">
                         LawAI
                     </h1>
-                </div>
+                </Link>
               </div>
               <p className="text-sm text-muted-foreground hidden lg:block">Your AI Legal Assistant</p>
             </header>
