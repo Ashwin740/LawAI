@@ -10,6 +10,9 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
+// Log the configuration to the browser's console for debugging purposes.
+console.log("Firebase Config Loaded for project:", firebaseConfig.projectId);
+
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
