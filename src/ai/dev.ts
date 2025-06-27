@@ -3,3 +3,4 @@ config();
 
 import '@/ai/flows/legal-term-definition.ts';
 import '@/ai/flows/document-summarization.ts';
+import '@/ai/flows/document-creation.ts';
