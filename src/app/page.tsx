@@ -4,8 +4,29 @@ import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Scale, Briefcase, User } from 'lucide-react';
+import { useAuth } from '@/context/auth';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function LandingPage() {
+  const { currentUser, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && currentUser) {
+      router.push('/app');
+    }
+  }, [currentUser, loading, router]);
+  
+  if (loading || currentUser) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-background">
+        <Scale className="w-12 h-12 text-primary animate-pulse" />
+        <p className="mt-4 text-muted-foreground">Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-950 font-body">
       <main className="flex flex-col items-center justify-center flex-1 p-4 text-center">
@@ -25,13 +46,13 @@ export default function LandingPage() {
             <CardDescription>Please select your role to continue.</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <Link href="/app" passHref>
+            <Link href="/login?role=professional" passHref>
               <Button size="lg" className="w-full sm:w-auto">
                 <Briefcase className="mr-2 h-5 w-5" />
                 Law Professional
               </Button>
             </Link>
-            <Link href="/app" passHref>
+            <Link href="/login?role=user" passHref>
               <Button size="lg" variant="outline" className="w-full sm:w-auto">
                  <User className="mr-2 h-5 w-5" />
                 Not a Law Professional

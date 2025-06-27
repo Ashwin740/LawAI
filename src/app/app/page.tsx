@@ -1,101 +1,79 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import { DocumentSummarizer } from "@/components/law-ai/document-summarizer";
-import { LegalSearch } from "@/components/law-ai/legal-search";
-import { DocumentCreator } from "@/components/law-ai/document-creator";
-import { Scale } from "lucide-react";
+import { useAuth } from '@/context/auth';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { FilePlus2, FolderKanban, Users } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
-export default function Home() {
-  // State for DocumentSummarizer
-  const [documentText, setDocumentText] = useState("");
-  const [summary, setSummary] = useState("");
-  const [summarizerIsLoading, setSummarizerIsLoading] = useState(false);
-  const [fileName, setFileName] = useState("");
-
-  // State for LegalSearch
-  const [query, setQuery] = useState("");
-  const [insight, setInsight] = useState("");
-  const [searchIsLoading, setSearchIsLoading] = useState(false);
-
-  // State for DocumentCreator
-  const [documentType, setDocumentType] = useState("");
-  const [details, setDetails] = useState("");
-  const [generatedDocument, setGeneratedDocument] = useState("");
-  const [creatorIsLoading, setCreatorIsLoading] = useState(false);
+export default function DashboardPage() {
+  const { currentUser, role } = useAuth();
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="p-4 border-b bg-card">
-        <div className="container mx-auto flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <Scale className="w-8 h-8 text-primary" />
-            <h1 className="text-3xl font-headline font-bold text-primary">
-              LawAI
-            </h1>
-          </div>
-        </div>
-      </header>
-      <main className="flex-1 p-4 md:p-8">
-        <div className="container mx-auto">
-          <Tabs defaultValue="summarize" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 max-w-2xl mx-auto">
-              <TabsTrigger value="summarize">
-                Document Summarization
-              </TabsTrigger>
-              <TabsTrigger value="search">Legal Search</TabsTrigger>
-              <TabsTrigger value="create">Document Creation</TabsTrigger>
-            </TabsList>
-            <TabsContent value="summarize">
-              <DocumentSummarizer
-                documentText={documentText}
-                setDocumentText={setDocumentText}
-                summary={summary}
-                setSummary={setSummary}
-                isLoading={summarizerIsLoading}
-                setIsLoading={setSummarizerIsLoading}
-                fileName={fileName}
-                setFileName={setFileName}
-              />
-            </TabsContent>
-            <TabsContent value="search">
-              <LegalSearch
-                query={query}
-                setQuery={setQuery}
-                insight={insight}
-                setInsight={setInsight}
-                isLoading={searchIsLoading}
-                setIsLoading={setSearchIsLoading}
-              />
-            </TabsContent>
-            <TabsContent value="create">
-              <DocumentCreator
-                documentType={documentType}
-                setDocumentType={setDocumentType}
-                details={details}
-                setDetails={setDetails}
-                generatedDocument={generatedDocument}
-                setGeneratedDocument={setGeneratedDocument}
-                isLoading={creatorIsLoading}
-                setIsLoading={setCreatorIsLoading}
-              />
-            </TabsContent>
-          </Tabs>
-        </div>
-      </main>
-      <footer className="p-4 border-t bg-card text-center text-sm text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} LawAI. All rights reserved.</p>
-        <p className="text-xs mt-1">
-          Disclaimer: AI-generated content may be inaccurate. Please consult a
-          legal professional.
-        </p>
-      </footer>
+    <div>
+      <h1 className="text-3xl font-bold tracking-tight">
+        Welcome back, {currentUser?.displayName || currentUser?.email?.split('@')[0] || 'User'}!
+      </h1>
+      <p className="text-muted-foreground mt-2">
+        Here's a quick overview of your legal workspace.
+      </p>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-8">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              Generated Documents
+            </CardTitle>
+            <FolderKanban className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">12</div>
+            <p className="text-xs text-muted-foreground">
+              +2 this month
+            </p>
+             <Link href="/app/documents" passHref>
+                <Button variant="link" className="px-0">View Saved Documents</Button>
+            </Link>
+          </CardContent>
+        </Card>
+        
+        {role === 'professional' && (
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Clients Managed
+              </CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">5</div>
+              <p className="text-xs text-muted-foreground">
+                +1 new client this week
+              </p>
+              <Link href="/app/clients" passHref>
+                  <Button variant="link" className="px-0">Manage Clients</Button>
+              </Link>
+            </CardContent>
+          </Card>
+        )}
+
+        <Card className="md:col-span-2 lg:col-span-1">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              Quick Actions
+            </CardTitle>
+             <FilePlus2 className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-4">
+              Jump right into your legal tasks.
+            </p>
+            <Link href="/app/tools" passHref>
+                <Button className="w-full">Go to Legal Tools</Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
