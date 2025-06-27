@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/auth";
+import { useState } from "react";
 import {
   Tabs,
   TabsContent,
@@ -12,14 +10,9 @@ import {
 import { DocumentSummarizer } from "@/components/law-ai/document-summarizer";
 import { LegalSearch } from "@/components/law-ai/legal-search";
 import { DocumentCreator } from "@/components/law-ai/document-creator";
-import { Loader2, LogOut, Scale } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { auth } from "@/lib/firebase";
+import { Scale } from "lucide-react";
 
 export default function Home() {
-  const { currentUser, loading } = useAuth();
-  const router = useRouter();
-
   // State for DocumentSummarizer
   const [documentText, setDocumentText] = useState("");
   const [summary, setSummary] = useState("");
@@ -37,25 +30,6 @@ export default function Home() {
   const [generatedDocument, setGeneratedDocument] = useState("");
   const [creatorIsLoading, setCreatorIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (!loading && !currentUser) {
-      router.push("/login");
-    }
-  }, [currentUser, loading, router]);
-
-  if (loading || !currentUser) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-background">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  const handleLogout = async () => {
-    await auth.signOut();
-    router.push("/login");
-  };
-
   return (
     <div className="flex flex-col min-h-screen">
       <header className="p-4 border-b bg-card">
@@ -66,10 +40,6 @@ export default function Home() {
               LawAI
             </h1>
           </div>
-          <Button variant="outline" size="sm" onClick={handleLogout}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
-          </Button>
         </div>
       </header>
       <main className="flex-1 p-4 md:p-8">
