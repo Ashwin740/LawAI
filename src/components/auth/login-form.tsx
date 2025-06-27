@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   signInWithEmailAndPassword,
@@ -123,7 +124,7 @@ export function LoginForm() {
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-center">
+        <CardFooter className="flex flex-col items-center justify-center pt-4">
           <Button
             variant="link"
             onClick={() => {
@@ -135,6 +136,11 @@ export function LoginForm() {
             {isRegistering
               ? "Already have an account? Login"
               : "Don't have an account? Register"}
+          </Button>
+           <Button asChild variant="link" className="text-xs h-auto p-0 text-muted-foreground font-normal">
+              <Link href="/">
+                &larr; Back to role selection
+              </Link>
           </Button>
         </CardFooter>
       </Card>

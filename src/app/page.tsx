@@ -19,16 +19,12 @@ export default function LandingPage() {
         }
     }, [currentUser, loading, router]);
 
-    if (loading) {
+    if (loading || currentUser) {
         return (
           <div className="flex items-center justify-center min-h-screen bg-background">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
         );
-    }
-
-    if (currentUser) {
-        return null;
     }
 
   return (
