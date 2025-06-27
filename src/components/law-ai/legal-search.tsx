@@ -54,13 +54,13 @@ export function LegalSearch() {
           Legal Search & Insights
         </CardTitle>
         <CardDescription>
-          Ask any legal question to get an AI-powered insight.
+          Ask any legal question to get an AI-powered insight based on Indian law.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex flex-col sm:flex-row gap-2">
           <Input
-            placeholder="e.g., 'What are the elements of a contract?'"
+            placeholder="e.g., 'What are the elements of a contract under the Indian Contract Act, 1872?'"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}

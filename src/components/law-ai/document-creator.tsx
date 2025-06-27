@@ -99,7 +99,7 @@ export function DocumentCreator() {
               </SelectContent>
             </Select>
             <Textarea
-              placeholder="Provide details for your document. For example: names of parties, dates, specific clauses, amounts, etc."
+              placeholder="Provide details for your document. For example: names of parties, addresses, PAN numbers, subject matter, terms, and witness details."
               value={details}
               onChange={(e) => setDetails(e.target.value)}
               className="h-48 resize-none"

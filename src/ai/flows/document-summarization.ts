@@ -31,7 +31,7 @@ const prompt = ai.definePrompt({
   name: 'documentSummarizationPrompt',
   input: {schema: DocumentSummarizationInputSchema},
   output: {schema: DocumentSummarizationOutputSchema},
-  prompt: `You are an expert legal summarizer. Please provide a concise summary of the following legal document. Focus on the key points and main arguments.
+  prompt: `You are an expert legal summarizer with a focus on documents pertaining to Indian law. Please provide a concise summary of the following legal document. Focus on the key points, obligations, and legal implications under the Indian legal framework.
 
 Document:
 {{{documentText}}}`,
