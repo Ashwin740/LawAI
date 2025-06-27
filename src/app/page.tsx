@@ -5,7 +5,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import { DocumentSummarizer } from "@/components/law-ai/document-summarizer";
-import { LegalTermDefiner } from "@/components/law-ai/legal-term-definer";
+import { LegalSearch } from "@/components/law-ai/legal-search";
 import { DocumentCreator } from "@/components/law-ai/document-creator";
 import { Scale } from "lucide-react";
 
@@ -25,14 +25,14 @@ export default function Home() {
           <Tabs defaultValue="summarize" className="w-full">
             <TabsList className="grid w-full grid-cols-3 max-w-2xl mx-auto">
               <TabsTrigger value="summarize">Document Summarization</TabsTrigger>
-              <TabsTrigger value="define">Legal Term Definition</TabsTrigger>
+              <TabsTrigger value="search">Legal Search</TabsTrigger>
               <TabsTrigger value="create">Document Creation</TabsTrigger>
             </TabsList>
             <TabsContent value="summarize">
               <DocumentSummarizer />
             </TabsContent>
-            <TabsContent value="define">
-              <LegalTermDefiner />
+            <TabsContent value="search">
+              <LegalSearch />
             </TabsContent>
             <TabsContent value="create">
               <DocumentCreator />
