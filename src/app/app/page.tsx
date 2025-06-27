@@ -31,9 +31,9 @@ export default function DashboardPage() {
             <p className="text-xs text-muted-foreground">
               +2 this month
             </p>
-             <Link href="/app/documents" passHref>
-                <Button variant="link" className="px-0">View Saved Documents</Button>
-            </Link>
+             <Button asChild variant="link" className="px-0">
+                <Link href="/app/documents">View Saved Documents</Link>
+            </Button>
           </CardContent>
         </Card>
         
@@ -50,9 +50,9 @@ export default function DashboardPage() {
               <p className="text-xs text-muted-foreground">
                 +1 new client this week
               </p>
-              <Link href="/app/clients" passHref>
-                  <Button variant="link" className="px-0">Manage Clients</Button>
-              </Link>
+              <Button asChild variant="link" className="px-0">
+                  <Link href="/app/clients">Manage Clients</Link>
+              </Button>
             </CardContent>
           </Card>
         )}
@@ -68,9 +68,9 @@ export default function DashboardPage() {
             <p className="text-sm text-muted-foreground mb-4">
               Jump right into your legal tasks.
             </p>
-            <Link href="/app/tools" passHref>
-                <Button className="w-full">Go to Legal Tools</Button>
-            </Link>
+            <Button asChild className="w-full">
+                <Link href="/app/tools">Go to Legal Tools</Link>
+            </Button>
           </CardContent>
         </Card>
       </div>

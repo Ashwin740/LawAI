@@ -24,12 +24,12 @@ export default function DocumentsPage() {
             <p className="text-muted-foreground max-w-sm">
                 When you create and save documents using our legal tools, you'll find them right here for easy access.
             </p>
-            <Link href="/app/tools" passHref>
-                <Button>
+            <Button asChild>
+                <Link href="/app/tools">
                     <FilePlus2 className="mr-2 h-4 w-4"/>
                     Create a Document
-                </Button>
-            </Link>
+                </Link>
+            </Button>
         </CardContent>
       </Card>
     </div>

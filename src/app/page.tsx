@@ -46,18 +46,18 @@ export default function LandingPage() {
             <CardDescription>Please select your role to continue.</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <Link href="/login?role=professional" passHref>
-              <Button size="lg" className="w-full sm:w-auto">
+            <Button asChild size="lg" className="w-full sm:w-auto">
+              <Link href="/login?role=professional">
                 <Briefcase className="mr-2 h-5 w-5" />
                 Law Professional
-              </Button>
-            </Link>
-            <Link href="/login?role=user" passHref>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto">
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
+              <Link href="/login?role=user">
                  <User className="mr-2 h-5 w-5" />
                 Not a Law Professional
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </CardContent>
         </Card>
       </main>
