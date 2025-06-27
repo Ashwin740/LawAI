@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { legalSearch } from "@/ai/flows/legal-search";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,10 +13,23 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Search, Sparkles } from "lucide-react";
 
-export function LegalSearch() {
-  const [query, setQuery] = useState("");
-  const [insight, setInsight] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+interface LegalSearchProps {
+  query: string;
+  setQuery: (query: string) => void;
+  insight: string;
+  setInsight: (insight: string) => void;
+  isLoading: boolean;
+  setIsLoading: (loading: boolean) => void;
+}
+
+export function LegalSearch({
+  query,
+  setQuery,
+  insight,
+  setInsight,
+  isLoading,
+  setIsLoading,
+}: LegalSearchProps) {
   const { toast } = useToast();
 
   const handleSearch = async () => {

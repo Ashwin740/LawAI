@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { createDocument } from "@/ai/flows/document-creation";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,7 +18,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, FilePlus2, Sparkles, Copy } from "lucide-react";
+import { Copy, FilePlus2, Loader2, Sparkles } from "lucide-react";
 
 const documentTypes = [
   "Simple Contract",
@@ -29,11 +28,27 @@ const documentTypes = [
   "Cease and Desist Letter",
 ];
 
-export function DocumentCreator() {
-  const [documentType, setDocumentType] = useState("");
-  const [details, setDetails] = useState("");
-  const [generatedDocument, setGeneratedDocument] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+interface DocumentCreatorProps {
+  documentType: string;
+  setDocumentType: (type: string) => void;
+  details: string;
+  setDetails: (details: string) => void;
+  generatedDocument: string;
+  setGeneratedDocument: (doc: string) => void;
+  isLoading: boolean;
+  setIsLoading: (loading: boolean) => void;
+}
+
+export function DocumentCreator({
+  documentType,
+  setDocumentType,
+  details,
+  setDetails,
+  generatedDocument,
+  setGeneratedDocument,
+  isLoading,
+  setIsLoading,
+}: DocumentCreatorProps) {
   const { toast } = useToast();
 
   const handleCreate = async () => {

@@ -14,12 +14,28 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, UploadCloud, FileText, Sparkles } from "lucide-react";
 
-export function DocumentSummarizer() {
-  const [documentText, setDocumentText] = useState("");
-  const [summary, setSummary] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+interface DocumentSummarizerProps {
+  documentText: string;
+  setDocumentText: (text: string) => void;
+  summary: string;
+  setSummary: (summary: string) => void;
+  isLoading: boolean;
+  setIsLoading: (loading: boolean) => void;
+  fileName: string;
+  setFileName: (name: string) => void;
+}
+
+export function DocumentSummarizer({
+  documentText,
+  setDocumentText,
+  summary,
+  setSummary,
+  isLoading,
+  setIsLoading,
+  fileName,
+  setFileName,
+}: DocumentSummarizerProps) {
   const [isDragging, setIsDragging] = useState(false);
-  const [fileName, setFileName] = useState("");
   const { toast } = useToast();
 
   const handleSummarize = async () => {
@@ -91,7 +107,7 @@ export function DocumentSummarizer() {
         }
       }
     },
-    [toast]
+    [toast, handleFileRead]
   );
 
   return (
