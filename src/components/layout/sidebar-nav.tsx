@@ -11,8 +11,15 @@ import {
   SidebarMenuButton,
   SidebarSeparator,
 } from '@/components/ui/sidebar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogOut, LayoutDashboard, FileText, User, Users, FolderKanban, Briefcase } from 'lucide-react';
+import { LogOut, LayoutDashboard, FileText, User, Users, FolderKanban, Briefcase, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -44,17 +51,50 @@ export function SidebarNav() {
   }
   
   const menuItems = [
-    { href: '/app', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/app/tools', label: 'Legal Tools', icon: FileText },
     { href: '/app/documents', label: 'Saved Documents', icon: FolderKanban },
     { href: '/app/clients', label: 'Clients', icon: Users, role: 'professional' },
-    { href: '/app/profile', label: 'Profile', icon: User },
   ];
+
+  const isDashboardActive = pathname === '/app' || pathname === '/app/profile';
 
   return (
     <>
       <div className="flex-1 p-2">
         <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                  <SidebarMenuButton isActive={isDashboardActive} tooltip="Dashboard" className="w-full justify-between">
+                    <div className="flex items-center gap-2">
+                      <LayoutDashboard />
+                      <span>Dashboard</span>
+                    </div>
+                    <ChevronDown className="h-4 w-4 group-data-[collapsible=icon]:hidden" />
+                  </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent side="right" align="start" className="w-56">
+                <DropdownMenuItem asChild>
+                  <Link href="/app">
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    <span>Overview</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/app/profile">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log Out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+
           {menuItems.map((item) => {
             if (item.role && item.role !== role) {
               return null;
@@ -84,14 +124,6 @@ export function SidebarNav() {
             {role && <span className="text-xs text-muted-foreground capitalize flex items-center gap-1"><Briefcase className="w-3 h-3"/>{role}</span>}
           </div>
         </div>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton onClick={handleLogout} tooltip="Log Out">
-              <LogOut />
-              <span>Log Out</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
       </div>
     </>
   );
