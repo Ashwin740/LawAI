@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -18,7 +19,9 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, FilePlus2, Loader2, Sparkles } from "lucide-react";
+import { Copy, FileDown, FilePlus2, Loader2, Sparkles } from "lucide-react";
+import jsPDF from "jspdf";
+import { Document, Packer, Paragraph } from "docx";
 
 const documentTypes = [
   "Simple Contract",
@@ -77,7 +80,7 @@ export function DocumentCreator({
       setIsLoading(false);
     }
   };
-  
+
   const handleCopy = () => {
     navigator.clipboard.writeText(generatedDocument);
     toast({
@@ -85,6 +88,43 @@ export function DocumentCreator({
       description: "The document text has been copied to your clipboard.",
     });
   };
+
+  const handleDownloadPdf = () => {
+    const doc = new jsPDF();
+    const lines = doc.splitTextToSize(generatedDocument, 180);
+    doc.text(lines, 10, 10);
+    doc.save(`${documentType.replace(/\s/g, '_') || 'document'}.pdf`);
+    toast({
+        title: "Downloaded!",
+        description: "The PDF document has been downloaded.",
+    });
+  };
+
+  const handleDownloadWord = () => {
+    const doc = new Document({
+      sections: [{
+        children: generatedDocument.split('\n').map(text => new Paragraph({
+            children: [{ text }],
+        })),
+      }],
+    });
+
+    Packer.toBlob(doc).then(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${documentType.replace(/\s/g, '_') || 'document'}.docx`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      toast({
+          title: "Downloaded!",
+          description: "The Word document has been downloaded.",
+      });
+    });
+  };
+
 
   return (
     <Card className="max-w-4xl mx-auto mt-6 shadow-lg border">
@@ -123,7 +163,7 @@ export function DocumentCreator({
           </div>
 
           <div className="relative">
-            <Card className="h-full bg-background/50">
+            <Card className="h-full bg-background/50 flex flex-col">
               <CardHeader>
                 <CardTitle className="font-headline text-xl flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
@@ -138,7 +178,7 @@ export function DocumentCreator({
                     )}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="h-[250px] overflow-y-auto">
+              <CardContent className="flex-grow h-[250px] overflow-y-auto">
                 {isLoading ? (
                   <div className="flex items-center justify-center h-full">
                     <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -149,6 +189,18 @@ export function DocumentCreator({
                   </pre>
                 )}
               </CardContent>
+               {generatedDocument && !isLoading && (
+                  <CardFooter className="pt-4 flex gap-2 justify-end border-t mt-auto">
+                      <Button variant="outline" size="sm" onClick={handleDownloadWord}>
+                          <FileDown />
+                          Word (.docx)
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={handleDownloadPdf}>
+                          <FileDown />
+                          PDF
+                      </Button>
+                  </CardFooter>
+              )}
             </Card>
           </div>
         </div>
