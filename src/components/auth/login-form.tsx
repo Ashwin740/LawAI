@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -57,7 +58,11 @@ export function LoginForm() {
       toast({ title: "Login Successful", description: "Welcome!" });
       router.push('/app');
     } catch (error: any) {
-      toast({ variant: "destructive", title: "Login Failed", description: error.message });
+      let description = error.message;
+      if (error.code === 'auth/configuration-not-found') {
+        description = 'Google Sign-In is not configured for this project. Please enable it in your Firebase Authentication console settings.';
+      }
+      toast({ variant: "destructive", title: "Login Failed", description });
     } finally {
       setIsLoading(false);
     }
