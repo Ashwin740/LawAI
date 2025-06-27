@@ -32,7 +32,7 @@ export function LoginForm() {
 
   useEffect(() => {
     if (!loading && currentUser) {
-      router.push("/");
+      router.push("/app");
     }
   }, [currentUser, loading, router]);
 
