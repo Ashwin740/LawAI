@@ -1,4 +1,4 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FolderKanban, FilePlus2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -14,9 +14,6 @@ export default function DocumentsPage() {
       <Card className="mt-8">
         <CardHeader>
           <CardTitle>Your Documents</CardTitle>
-          <CardDescription>
-            This feature is under construction. Saved documents will appear here.
-          </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col items-center justify-center text-center gap-4 py-16">
             <FolderKanban className="w-16 h-16 text-muted-foreground/50" />
