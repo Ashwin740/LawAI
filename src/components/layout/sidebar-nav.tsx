@@ -19,7 +19,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogOut, LayoutDashboard, FileText, User, Users, FolderKanban, Briefcase, ChevronDown } from 'lucide-react';
+import { LogOut, LayoutDashboard, User, Users, FolderKanban, Briefcase, ChevronDown, Wrench } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -51,7 +51,7 @@ export function SidebarNav() {
   }
   
   const menuItems = [
-    { href: '/app/tools', label: 'Legal Tools', icon: FileText },
+    { href: '/app/tools', label: 'Legal Tools', icon: Wrench },
     { href: '/app/documents', label: 'Saved Documents', icon: FolderKanban },
     { href: '/app/clients', label: 'Clients', icon: Users, role: 'professional' },
   ];
