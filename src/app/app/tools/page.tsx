@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   Tabs,
   TabsContent,
@@ -11,7 +12,10 @@ import { DocumentSummarizer } from "@/components/law-ai/document-summarizer";
 import { LegalSearch } from "@/components/law-ai/legal-search";
 import { DocumentCreator } from "@/components/law-ai/document-creator";
 
-export default function ToolsPage() {
+function ToolsPageContent() {
+  const searchParams = useSearchParams();
+  const defaultTab = searchParams.get("tab") || "summarize";
+
   // State for DocumentSummarizer
   const [documentText, setDocumentText] = useState("");
   const [summary, setSummary] = useState("");
@@ -35,7 +39,7 @@ export default function ToolsPage() {
         <p className="text-muted-foreground mt-2">
             Use our AI-powered tools for summarization, research, and document creation.
         </p>
-        <Tabs defaultValue="summarize" className="w-full mt-6">
+        <Tabs defaultValue={defaultTab} className="w-full mt-6">
         <TabsList className="grid w-full grid-cols-3 max-w-2xl mx-auto">
             <TabsTrigger value="summarize">
             Document Summarization
@@ -80,4 +84,12 @@ export default function ToolsPage() {
         </Tabs>
     </div>
   );
+}
+
+export default function ToolsPage() {
+  return (
+    <Suspense>
+      <ToolsPageContent />
+    </Suspense>
+  )
 }

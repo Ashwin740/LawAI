@@ -22,7 +22,7 @@ export default function DocumentsPage() {
                 When you create and save documents using our legal tools, you'll find them right here for easy access.
             </p>
             <Button asChild>
-                <Link href="/app/tools">
+                <Link href="/app/tools?tab=create">
                     <FilePlus2 className="mr-2 h-4 w-4"/>
                     Create a Document
                 </Link>
