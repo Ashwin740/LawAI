@@ -32,7 +32,7 @@ export default function DashboardPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <FileText className="w-6 h-6 text-accent" />
+                <Wrench className="w-6 h-6 text-accent" />
                 Legal Tools
               </CardTitle>
               <CardDescription>
