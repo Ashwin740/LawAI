@@ -1,12 +1,11 @@
-'use client';
-
-import { Suspense } from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { LoginForm } from '@/components/auth/login-form';
 import { Scale } from 'lucide-react';
 
-function LoginPageContent() {
+export default function LoginPage({ searchParams }: { searchParams?: { [key: string]: string | string[] | undefined } }) {
+  const isSignUp = searchParams?.mode === 'signup';
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-950">
       <div className="mb-8 text-center">
@@ -17,29 +16,21 @@ function LoginPageContent() {
           </h1>
         </Link>
         <p className="text-muted-foreground">
-          Welcome! Please sign in to continue.
+          {isSignUp ? 'Create an account to begin.' : 'Welcome back! Please sign in.'}
         </p>
       </div>
 
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">{isSignUp ? 'Create Account' : 'Login'}</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account.
+            {isSignUp ? "Enter your details to create your account." : "Enter your email below to login to your account."}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <LoginForm />
+          <LoginForm isSignUpInitial={isSignUp} />
         </CardContent>
       </Card>
     </div>
   );
-}
-
-export default function LoginPage() {
-  return (
-    <Suspense>
-      <LoginPageContent />
-    </Suspense>
-  )
 }
