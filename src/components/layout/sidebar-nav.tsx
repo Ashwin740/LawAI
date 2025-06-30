@@ -19,20 +19,19 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogOut, LayoutDashboard, User, Users, FolderKanban, Briefcase, ChevronDown, Wrench } from 'lucide-react';
+import { LogOut, LayoutDashboard, User, FolderKanban, ChevronDown, Wrench } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export function SidebarNav() {
   const pathname = usePathname();
   const router = useRouter();
-  const { currentUser, role, setRole } = useAuth();
+  const { currentUser } = useAuth();
   const { toast } = useToast();
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      setRole(null); // Clear role from context and localStorage
       router.push('/');
       toast({ title: 'Logged Out', description: 'You have been successfully logged out.' });
     } catch (error) {
@@ -53,7 +52,6 @@ export function SidebarNav() {
   const menuItems = [
     { href: '/app/tools', label: 'Legal Tools', icon: Wrench },
     { href: '/app/documents', label: 'Saved Documents', icon: FolderKanban },
-    { href: '/app/clients', label: 'Clients', icon: Users, role: 'professional' },
   ];
 
   const isDashboardActive = pathname === '/app' || pathname === '/app/profile';
@@ -95,11 +93,7 @@ export function SidebarNav() {
             </DropdownMenu>
           </SidebarMenuItem>
 
-          {menuItems.map((item) => {
-            if (item.role && item.role !== role) {
-              return null;
-            }
-            return (
+          {menuItems.map((item) => (
               <SidebarMenuItem key={item.href}>
                 <SidebarMenuButton asChild isActive={pathname === item.href} tooltip={item.label}>
                   <Link href={item.href}>
@@ -108,8 +102,8 @@ export function SidebarNav() {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            );
-          })}
+            )
+          )}
         </SidebarMenu>
       </div>
       <div className='p-2'>
@@ -121,7 +115,6 @@ export function SidebarNav() {
           </Avatar>
           <div className="flex flex-col text-sm overflow-hidden group-data-[collapsible=icon]:hidden">
             <span className="font-medium truncate">{currentUser.displayName || currentUser.email}</span>
-            {role && <span className="text-xs text-muted-foreground capitalize flex items-center gap-1"><Briefcase className="w-3 h-3"/>{role}</span>}
           </div>
         </div>
       </div>

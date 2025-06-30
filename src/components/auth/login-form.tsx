@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase';
-import { useAuth } from '@/context/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,7 +20,6 @@ export function LoginForm() {
   const [isSignUp, setIsSignUp] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
-  const { setRole } = useAuth();
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +31,6 @@ export function LoginForm() {
 
     try {
       await performAuth;
-      setRole('professional');
       toast({ title: 'Success!', description: `You have successfully ${isSignUp ? 'signed up' : 'logged in'}.` });
       router.push('/app');
     } catch (error: any) {
@@ -47,7 +44,6 @@ export function LoginForm() {
     setIsLoading(true);
     try {
       await signInWithPopup(auth, googleProvider);
-      setRole('professional');
       toast({ title: "Login Successful", description: "Welcome!" });
       router.push('/app');
     } catch (error: any) {

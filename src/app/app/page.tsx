@@ -1,14 +1,11 @@
 'use client';
 
-import { useAuth } from '@/context/auth';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, FolderKanban, Users, Wrench } from 'lucide-react';
+import { FolderKanban, Wrench } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 export default function DashboardPage() {
-  const { role } = useAuth();
-
   return (
     <div className="flex flex-col gap-8">
       <section className="text-center bg-card border rounded-lg p-8 shadow-sm">
@@ -28,7 +25,7 @@ export default function DashboardPage() {
 
       <section>
         <h2 className="text-2xl font-semibold tracking-tight mb-4">Your Workspace</h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -62,25 +59,6 @@ export default function DashboardPage() {
               </Button>
             </CardContent>
           </Card>
-          
-          {role === 'professional' && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Users className="w-6 h-6 text-accent" />
-                    Client Management
-                </CardTitle>
-                <CardDescription>
-                  Organize client information and link them to cases and documents.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button asChild variant="outline" className="w-full">
-                    <Link href="/app/clients">Manage Clients</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          )}
         </div>
       </section>
     </div>
