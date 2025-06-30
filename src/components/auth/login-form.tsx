@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase';
 import { useAuth } from '@/context/auth';
@@ -22,7 +22,6 @@ export function LoginForm() {
   const { toast } = useToast();
   const router = useRouter();
   const { setRole } = useAuth();
-  const searchParams = useSearchParams();
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,10 +33,7 @@ export function LoginForm() {
 
     try {
       await performAuth;
-      const role = searchParams.get('role');
-      if (role === 'professional' || role === 'user') {
-        setRole(role);
-      }
+      setRole('professional');
       toast({ title: 'Success!', description: `You have successfully ${isSignUp ? 'signed up' : 'logged in'}.` });
       router.push('/app');
     } catch (error: any) {
@@ -51,10 +47,7 @@ export function LoginForm() {
     setIsLoading(true);
     try {
       await signInWithPopup(auth, googleProvider);
-      const role = searchParams.get('role');
-      if (role === 'professional' || role === 'user') {
-        setRole(role);
-      }
+      setRole('professional');
       toast({ title: "Login Successful", description: "Welcome!" });
       router.push('/app');
     } catch (error: any) {

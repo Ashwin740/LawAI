@@ -17,7 +17,7 @@ function LoginPageContent() {
           </h1>
         </Link>
         <p className="text-muted-foreground">
-          Welcome back! Please sign in to continue.
+          Welcome! Please sign in to continue.
         </p>
       </div>
 
@@ -32,12 +32,6 @@ function LoginPageContent() {
           <LoginForm />
         </CardContent>
       </Card>
-      <p className="mt-4 text-sm text-center text-muted-foreground">
-        Changed your mind about your role?{' '}
-        <Link href="/" className="underline hover:text-primary">
-          Go back
-        </Link>
-      </p>
     </div>
   );
 }
