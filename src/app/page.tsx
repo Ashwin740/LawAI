@@ -29,7 +29,7 @@ export default function LandingPage() {
       <main className="flex-1">
         <section className="container flex flex-col items-center justify-center gap-6 py-12 text-center md:py-24">
           <h1 className="text-4xl font-extrabold leading-tight tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl font-headline text-primary">
-            AI-Powered Legal Assistance for India
+            AI-Powered Legal Assistance
           </h1>
           <p className="max-w-[700px] text-lg text-muted-foreground sm:text-xl">
             Streamline your legal workflows with intelligent document summarization,
