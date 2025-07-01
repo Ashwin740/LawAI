@@ -88,11 +88,28 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="py-6 md:px-8 md:py-4 border-t">
-        <div className="container flex flex-col items-center justify-center gap-4 md:h-16 md:flex-row">
-          <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
+      <footer className="py-6 md:px-8 md:py-4 border-t bg-muted/40">
+        <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
+            <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} LawAI. All rights reserved.
-          </p>
+            </p>
+            <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 md:gap-x-4">
+                <Link href="/terms-and-conditions" className="text-xs hover:underline underline-offset-4">
+                    Terms & Conditions
+                </Link>
+                <Link href="/privacy-policy" className="text-xs hover:underline underline-offset-4">
+                    Privacy Policy
+                </Link>
+                <Link href="/cancellation-and-refund" className="text-xs hover:underline underline-offset-4">
+                    Cancellation & Refund
+                </Link>
+                <Link href="/shipping-and-delivery" className="text-xs hover:underline underline-offset-4">
+                    Shipping & Delivery
+                </Link>
+                <Link href="/contact" className="text-xs hover:underline underline-offset-4">
+                    Contact Us
+                </Link>
+            </nav>
         </div>
       </footer>
     </div>
