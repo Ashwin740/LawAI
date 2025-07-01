@@ -11,7 +11,7 @@ export default function ContactPage() {
             <p>
                 For all support and general inquiries, please email us at:
                 <br />
-                <a href="mailto:support@lawai.com" className="text-primary underline">support@lawai.com</a>
+                <a href="mailto:support@thelawai.xyz" className="text-primary underline">support@thelawai.xyz</a>
             </p>
         </div>
         <div>
