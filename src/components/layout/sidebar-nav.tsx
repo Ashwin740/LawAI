@@ -19,7 +19,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogOut, LayoutDashboard, User, FolderKanban, ChevronDown, Wrench } from 'lucide-react';
+import { LogOut, LayoutDashboard, User, FolderKanban, ChevronDown, Wrench, Gem } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -45,6 +45,7 @@ export function SidebarNav() {
             <Skeleton className="h-8 w-full" />
             <Skeleton className="h-8 w-full" />
             <Skeleton className="h-8 w-full" />
+            <Skeleton className="h-8 w-full" />
         </div>
     );
   }
@@ -52,6 +53,7 @@ export function SidebarNav() {
   const menuItems = [
     { href: '/app/tools', label: 'Legal Tools', icon: Wrench },
     { href: '/app/documents', label: 'Saved Documents', icon: FolderKanban },
+    { href: '/app/pricing', label: 'Pricing', icon: Gem },
   ];
 
   const isDashboardActive = pathname === '/app' || pathname === '/app/profile';
@@ -95,7 +97,7 @@ export function SidebarNav() {
 
           {menuItems.map((item) => (
               <SidebarMenuItem key={item.href}>
-                <SidebarMenuButton asChild isActive={pathname === item.href} tooltip={item.label}>
+                <SidebarMenuButton asChild isActive={pathname.startsWith(item.href)} tooltip={item.label}>
                   <Link href={item.href}>
                     <item.icon />
                     <span>{item.label}</span>

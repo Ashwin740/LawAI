@@ -1,0 +1,102 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { CheckCircle, Gem, Star } from "lucide-react";
+import Link from "next/link";
+
+export default function PricingPage() {
+  const proFeatures = [
+    "Unlimited document summarizations",
+    "Unlimited document creations",
+    "Unlimited legal searches",
+    "Access to advanced AI models",
+    "Priority email support",
+    "Save and manage all documents",
+  ];
+
+  const trialFeatures = [
+    "10 document summarizations",
+    "10 document creations",
+    "25 legal searches",
+    "Standard AI models",
+    "14-day free trial",
+  ];
+
+  return (
+    <div className="flex flex-col gap-8">
+      <section className="text-center">
+        <h1 className="text-4xl font-bold font-headline text-primary tracking-tight">
+          Choose Your Plan
+        </h1>
+        <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+          Start with a 14-day free trial and unlock the full power of LawAI with our Pro plan. No credit card required for the trial.
+        </p>
+      </section>
+
+      <section className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto w-full mt-8">
+        <Card className="flex flex-col">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+                <Star className="w-6 h-6 text-accent" />
+                Free Trial
+            </CardTitle>
+            <CardDescription>
+                A 14-day trial to explore the core features of LawAI.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex-grow space-y-4">
+            <p className="text-4xl font-bold">₹0 <span className="text-sm font-normal text-muted-foreground">/ for 14 days</span></p>
+            <ul className="space-y-2 mt-4">
+              {trialFeatures.map((feature) => (
+                <li key={feature} className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                  <span className="text-muted-foreground">{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+          <CardFooter>
+            <Button variant="outline" className="w-full" disabled>
+                Your Current Plan
+            </Button>
+          </CardFooter>
+        </Card>
+
+        <Card className="border-primary border-2 flex flex-col relative shadow-xl">
+           <div className="absolute top-0 -translate-y-1/2 w-full flex justify-center">
+                <div className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold shadow-md">
+                    Most Popular
+                </div>
+            </div>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+                <Gem className="w-6 h-6 text-primary" />
+                LawAI Pro
+            </CardTitle>
+            <CardDescription>
+              For professionals who need unlimited access and advanced features.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex-grow space-y-4">
+             <p className="text-4xl font-bold">₹1999 <span className="text-sm font-normal text-muted-foreground">/ month</span></p>
+            <ul className="space-y-2 mt-4">
+              {proFeatures.map((feature) => (
+                <li key={feature} className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+          <CardFooter>
+            <Button className="w-full" size="lg">
+              Upgrade to Pro
+            </Button>
+          </CardFooter>
+        </Card>
+      </section>
+        <div className="text-center text-muted-foreground text-sm mt-4">
+            <p>For enterprise solutions or custom requirements, please <Link href="mailto:support@lawai.com" className="underline text-primary">contact us</Link>.</p>
+        </div>
+    </div>
+  );
+}
