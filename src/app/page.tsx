@@ -89,12 +89,9 @@ export default function LandingPage() {
       </main>
 
       <footer className="py-6 md:px-8 md:py-4 border-t">
-        <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
+        <div className="container flex flex-col items-center justify-center gap-4 md:h-16 md:flex-row">
           <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
             © {new Date().getFullYear()} LawAI. All rights reserved.
-          </p>
-           <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-              Powered by Firebase Studio.
           </p>
         </div>
       </footer>
