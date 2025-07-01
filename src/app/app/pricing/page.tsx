@@ -1,9 +1,15 @@
+'use client';
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuth } from "@/context/auth";
 import { CheckCircle, Gem, Star } from "lucide-react";
 import Link from "next/link";
+import { differenceInDays } from 'date-fns';
 
 export default function PricingPage() {
+  const { isTrialActive, trialEndDate } = useAuth();
+
   const proFeatures = [
     "Unlimited document summarizations",
     "Unlimited document creations",
@@ -20,6 +26,18 @@ export default function PricingPage() {
     "Standard AI models",
     "14-day free trial",
   ];
+
+  const getDaysLeft = () => {
+    if (!isTrialActive || !trialEndDate) return null;
+    const daysLeft = differenceInDays(trialEndDate, new Date());
+    
+    if (daysLeft < 0) return "Your trial has ended.";
+    if (daysLeft === 0) return "Your trial ends today.";
+    if (daysLeft === 1) return "You have 1 day left in your trial.";
+    return `You have ${daysLeft} days left in your trial.`;
+  };
+
+  const daysLeftText = getDaysLeft();
 
   return (
     <div className="flex flex-col gap-8">
@@ -54,10 +72,15 @@ export default function PricingPage() {
               ))}
             </ul>
           </CardContent>
-          <CardFooter>
+          <CardFooter className="flex-col items-stretch">
             <Button variant="outline" className="w-full" disabled>
                 Your Current Plan
             </Button>
+            {daysLeftText && (
+              <p className="text-xs text-muted-foreground text-center mt-2">
+                {daysLeftText}
+              </p>
+            )}
           </CardFooter>
         </Card>
 
