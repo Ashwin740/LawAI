@@ -26,7 +26,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 export function SidebarNav() {
   const pathname = usePathname();
   const router = useRouter();
-  const { currentUser } = useAuth();
+  const { currentUser, isTrialActive } = useAuth();
   const { toast } = useToast();
 
   const handleLogout = async () => {
@@ -117,6 +117,9 @@ export function SidebarNav() {
           </Avatar>
           <div className="flex flex-col text-sm overflow-hidden group-data-[collapsible=icon]:hidden">
             <span className="font-medium truncate">{currentUser.displayName || currentUser.email}</span>
+            {isTrialActive && (
+                <span className="text-xs text-muted-foreground">Free Trial</span>
+            )}
           </div>
         </div>
       </div>
