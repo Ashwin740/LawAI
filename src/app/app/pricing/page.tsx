@@ -77,7 +77,7 @@ export default function PricingPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-grow space-y-4">
-             <p className="text-4xl font-bold">₹1999 <span className="text-sm font-normal text-muted-foreground">/ month</span></p>
+             <p className="text-4xl font-bold">₹599 <span className="text-sm font-normal text-muted-foreground">/ month</span></p>
             <ul className="space-y-2 mt-4">
               {proFeatures.map((feature) => (
                 <li key={feature} className="flex items-start gap-3">
