@@ -6,9 +6,11 @@ import { useAuth } from "@/context/auth";
 import { CheckCircle, Gem, Star } from "lucide-react";
 import Link from "next/link";
 import { differenceInDays } from 'date-fns';
+import { useToast } from "@/hooks/use-toast";
 
 export default function PricingPage() {
   const { isTrialActive, trialEndDate } = useAuth();
+  const { toast } = useToast();
 
   const proFeatures = [
     "Unlimited document summarizations",
@@ -38,6 +40,13 @@ export default function PricingPage() {
   };
 
   const daysLeftText = getDaysLeft();
+
+  const handleUpgradeClick = () => {
+    toast({
+      title: "Feature Coming Soon!",
+      description: "Payment gateway integration is currently under construction. Please check back later.",
+    });
+  };
 
   return (
     <div className="flex flex-col gap-8">
@@ -111,7 +120,7 @@ export default function PricingPage() {
             </ul>
           </CardContent>
           <CardFooter>
-            <Button className="w-full" size="lg">
+            <Button className="w-full" size="lg" onClick={handleUpgradeClick}>
               Upgrade to Pro
             </Button>
           </CardFooter>
