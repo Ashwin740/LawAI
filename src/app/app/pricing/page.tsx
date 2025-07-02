@@ -55,8 +55,11 @@ export default function PricingPage() {
 
     setIsUpgrading(true);
     try {
-      const response = await fetch('https://buildingnew.app.n8n.cloud/webhook-test/payment%20request%20from%20LawAI', {
+      // We use 'no-cors' mode to send a "fire-and-forget" request. The browser
+      // would otherwise block this request due to the webhook server's CORS policy.
+      await fetch('https://buildingnew.app.n8n.cloud/webhook-test/payment%20request%20from%20LawAI', {
         method: 'POST',
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -68,10 +71,8 @@ export default function PricingPage() {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error('Webhook request failed');
-      }
-
+      // With 'no-cors', we cannot inspect the response, so we optimistically
+      // assume the request was sent successfully.
       toast({
         title: "Upgrade Request Sent!",
         description: "Your request has been received. Please allow some time for processing.",
