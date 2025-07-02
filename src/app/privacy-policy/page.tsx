@@ -1,7 +1,15 @@
+'use client';
+
 import { LegalPageLayout } from "@/components/layout/legal-page-layout";
+import { useState, useEffect } from "react";
 
 export default function PrivacyPolicyPage() {
-  const currentDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const [currentDate, setCurrentDate] = useState('');
+
+  useEffect(() => {
+    setCurrentDate(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
+  }, []);
+
   return (
     <LegalPageLayout title="Privacy Policy">
       <p>
@@ -23,9 +31,11 @@ export default function PrivacyPolicyPage() {
       <p>
         The security of your personal information is important to us, but remember that no method of transmission over the Internet, or method of electronic storage, is 100% secure. While we strive to use commercially acceptable means to protect your personal information, we cannot guarantee its absolute security.
       </p>
-      <p>
-        This policy is effective as of {currentDate}.
-      </p>
+      {currentDate && (
+        <p>
+          This policy is effective as of {currentDate}.
+        </p>
+      )}
     </LegalPageLayout>
   );
 }
