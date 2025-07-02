@@ -1,16 +1,18 @@
 'use client';
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/context/auth";
-import { CheckCircle, Gem, Star } from "lucide-react";
+import { CheckCircle, Gem, Star, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { differenceInDays } from 'date-fns';
 import { useToast } from "@/hooks/use-toast";
 
 export default function PricingPage() {
-  const { isTrialActive, trialEndDate } = useAuth();
+  const { isTrialActive, trialEndDate, currentUser } = useAuth();
   const { toast } = useToast();
+  const [isUpgrading, setIsUpgrading] = useState(false);
 
   const proFeatures = [
     "Unlimited document summarizations",
@@ -41,11 +43,49 @@ export default function PricingPage() {
 
   const daysLeftText = getDaysLeft();
 
-  const handleUpgradeClick = () => {
-    toast({
-      title: "Feature Coming Soon!",
-      description: "Payment gateway integration is currently under construction. Please check back later.",
-    });
+  const handleUpgradeClick = async () => {
+    if (!currentUser) {
+      toast({
+        variant: "destructive",
+        title: "Not Logged In",
+        description: "You must be logged in to upgrade.",
+      });
+      return;
+    }
+
+    setIsUpgrading(true);
+    try {
+      const response = await fetch('https://buildingnew.app.n8n.cloud/webhook-test/payment%20request%20from%20LawAI', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: currentUser.uid,
+          email: currentUser.email,
+          displayName: currentUser.displayName,
+          upgradeRequestTime: new Date().toISOString(),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Webhook request failed');
+      }
+
+      toast({
+        title: "Upgrade Request Sent!",
+        description: "Your request has been received. Please allow some time for processing.",
+      });
+    } catch (error) {
+      console.error('Error sending upgrade webhook:', error);
+      toast({
+        variant: "destructive",
+        title: "Upgrade Failed",
+        description: "Could not process your upgrade request. Please try again later.",
+      });
+    } finally {
+      setIsUpgrading(false);
+    }
   };
 
   return (
@@ -120,8 +160,15 @@ export default function PricingPage() {
             </ul>
           </CardContent>
           <CardFooter>
-            <Button className="w-full" size="lg" onClick={handleUpgradeClick}>
-              Upgrade to Pro
+            <Button className="w-full" size="lg" onClick={handleUpgradeClick} disabled={isUpgrading}>
+              {isUpgrading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                'Upgrade to Pro'
+              )}
             </Button>
           </CardFooter>
         </Card>
