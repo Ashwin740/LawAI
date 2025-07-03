@@ -22,6 +22,8 @@ import { useToast } from "@/hooks/use-toast";
 import { Copy, FileDown, FilePlus2, Loader2, Sparkles } from "lucide-react";
 import jsPDF from "jspdf";
 import { Document, Packer, Paragraph } from "docx";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const documentTypes = [
   "Simple Contract",
@@ -184,9 +186,13 @@ export function DocumentCreator({
                     <Loader2 className="w-8 h-8 animate-spin text-primary" />
                   </div>
                 ) : (
-                  <pre className="text-sm whitespace-pre-wrap font-sans">
-                    {generatedDocument || "Your generated document will appear here."}
-                  </pre>
+                  <div className="prose prose-sm dark:prose-invert max-w-none w-full">
+                    {generatedDocument ? (
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{generatedDocument}</ReactMarkdown>
+                    ) : (
+                      <p className="text-muted-foreground">Your generated document will appear here.</p>
+                    )}
+                  </div>
                 )}
               </CardContent>
                {generatedDocument && !isLoading && (

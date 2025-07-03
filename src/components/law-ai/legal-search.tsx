@@ -12,6 +12,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Search, Sparkles } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface LegalSearchProps {
   query: string;
@@ -110,9 +112,13 @@ export function LegalSearch({
                 <Loader2 className="w-8 h-8 animate-spin text-primary" />
               </div>
             ) : (
-              <p className="text-sm whitespace-pre-wrap">
-                {insight || "Your legal insight will appear here."}
-              </p>
+              <div className="prose prose-sm dark:prose-invert max-w-none">
+                {insight ? (
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{insight}</ReactMarkdown>
+                ) : (
+                  <p className="text-muted-foreground">Your legal insight will appear here.</p>
+                )}
+              </div>
             )}
           </CardContent>
         </Card>
