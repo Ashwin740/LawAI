@@ -21,7 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Copy, FileDown, FilePlus2, Loader2, Sparkles } from "lucide-react";
 import jsPDF from "jspdf";
-import { Document, Packer, Paragraph } from "docx";
+import { Document, Packer, Paragraph, TextRun } from "docx";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -103,7 +103,7 @@ export function DocumentCreator({
     let y = margin;
 
     lines.forEach((line: string) => {
-        if (y > pageHeight - margin) {
+        if (y + lineHeight > pageHeight - margin) {
             doc.addPage();
             y = margin; // Reset y for the new page
         }
@@ -119,11 +119,33 @@ export function DocumentCreator({
   };
 
   const handleDownloadWord = () => {
+    const paragraphs = generatedDocument.split(/\r?\n/).map(line => {
+      const runs: TextRun[] = [];
+      const parts = line.split('**');
+      
+      parts.forEach((part, index) => {
+        if (part) { // Don't create empty runs
+          if (index % 2 === 1) { // It's a bold part
+            runs.push(new TextRun({ text: part, bold: true }));
+          } else { // It's a normal part
+            runs.push(new TextRun(part));
+          }
+        }
+      });
+
+      // If a line was completely empty, the .map will produce an empty `runs` array.
+      // We create a paragraph to preserve the empty line.
+      if (runs.length === 0 && line === '') {
+        return new Paragraph({ children: [new TextRun("")] });
+      }
+      
+      return new Paragraph({ children: runs });
+    });
+
+
     const doc = new Document({
       sections: [{
-        children: generatedDocument.split('\n').map(text => new Paragraph({
-            children: [{ text }],
-        })),
+        children: paragraphs,
       }],
     });
 
