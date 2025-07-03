@@ -93,8 +93,24 @@ export function DocumentCreator({
 
   const handleDownloadPdf = () => {
     const doc = new jsPDF();
-    const lines = doc.splitTextToSize(generatedDocument, 180);
-    doc.text(lines, 10, 10);
+    const margin = 15; // mm
+    const lineHeight = 7; // mm
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const usableWidth = doc.internal.pageSize.getWidth() - margin * 2;
+    
+    const lines = doc.splitTextToSize(generatedDocument, usableWidth);
+    
+    let y = margin;
+
+    lines.forEach((line: string) => {
+        if (y > pageHeight - margin) {
+            doc.addPage();
+            y = margin; // Reset y for the new page
+        }
+        doc.text(line, margin, y);
+        y += lineHeight;
+    });
+
     doc.save(`${documentType.replace(/\s/g, '_') || 'document'}.pdf`);
     toast({
         title: "Downloaded!",
