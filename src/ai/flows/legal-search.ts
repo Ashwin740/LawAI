@@ -8,8 +8,8 @@
  * - LegalSearchOutput - The return type for the legalSearch function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const LegalSearchInputSchema = z.object({
   query: z.string().describe('The legal question or topic to search for.'),
@@ -27,9 +27,9 @@ export async function legalSearch(input: LegalSearchInput): Promise<LegalSearchO
 
 const prompt = ai.definePrompt({
   name: 'legalSearchPrompt',
-  input: {schema: LegalSearchInputSchema},
-  output: {schema: LegalSearchOutputSchema},
-  prompt: `You are an AI legal research assistant specializing in Indian law. Your task is to provide a comprehensive and clear answer to the user's legal query based on the Indian legal system.
+  input: { schema: LegalSearchInputSchema },
+  output: { schema: LegalSearchOutputSchema },
+  prompt: `You are a Lawyer who has a PHD degree in Indian Law. Your task is to provide the relevant legal assistance or possible way out of the situation a user is currently in.
 
 Query: {{{query}}}
 
@@ -46,7 +46,7 @@ const legalSearchFlow = ai.defineFlow(
     outputSchema: LegalSearchOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const { output } = await prompt(input);
     return output!;
   }
 );
